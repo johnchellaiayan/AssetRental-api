@@ -14,32 +14,32 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.assetmgmt.dao.TransactionRentDao;
+import com.assetmgmt.dao.TransactionDieselDao;
 import com.assetmgmt.dto.ResponseMessage;
-import com.assetmgmt.entity.TransactionRent;
-import com.assetmgmt.entity.model.TransactionRentModel;
+import com.assetmgmt.entity.TransactionDiesel;
+import com.assetmgmt.entity.model.TransactionDieselModel;
 
 @CrossOrigin(origins = "*") // this line
 @RestController
-@RequestMapping("api/transactionRent/")
+@RequestMapping("api/transactionDiesel/")
 public class TransactionDieselController {
 
 	@Autowired
-	private TransactionRentDao transactionRentDao;
+	private TransactionDieselDao transactionDieselDao;
 
-	@PostMapping("transactionRent")
-	public ResponseEntity<ResponseMessage<TransactionRent>> saveUser(@RequestBody TransactionRentModel transactionRentModel) {
-		ResponseMessage<TransactionRent> rm = new ResponseMessage<>();
+	@PostMapping("transactionDiesel")
+	public ResponseEntity<ResponseMessage<TransactionDiesel>> saveUser(@RequestBody TransactionDieselModel transactionDieselModel) {
+		ResponseMessage<TransactionDiesel> rm = new ResponseMessage<>();
 
 		try {
-			TransactionRent transactionRent = transactionRentDao.saveTransactionRent(transactionRentModel);
-			if (transactionRent != null) {
-				rm.setMessage("TransactionRent Information saved successfully");
-				rm.setResults(transactionRent);
+			TransactionDiesel transactionDiesel = transactionDieselDao.saveTransactionDiesel(transactionDieselModel);
+			if (transactionDiesel != null) {
+				rm.setMessage("TransactionDiesel Information saved successfully");
+				rm.setResults(transactionDiesel);
 				rm.setStatusCode(1);
 			} else {
-				rm.setMessage("TransactionRent Record not saved");
-				rm.setResults(transactionRent);
+				rm.setMessage("TransactionDiesel Record not saved");
+				rm.setResults(transactionDiesel);
 				rm.setStatusCode(0);
 			}
 		} catch (Exception e) {
@@ -53,21 +53,21 @@ public class TransactionDieselController {
 	}
 
 	@CrossOrigin
-	@PutMapping("transactionRents/{id}")
-	public ResponseEntity<ResponseMessage<TransactionRent>> updateUser(@RequestBody TransactionRentModel transactionRentModel,
+	@PutMapping("transactionDiesels/{id}")
+	public ResponseEntity<ResponseMessage<TransactionDiesel>> updateUser(@RequestBody TransactionDieselModel transactionDieselModel,
 			@PathVariable Long id) {
-		ResponseMessage<TransactionRent> rm = new ResponseMessage<>();
+		ResponseMessage<TransactionDiesel> rm = new ResponseMessage<>();
 
 		try {
-			System.out.println("TransactionRentId=" + id);
-			TransactionRent transactionRent = transactionRentDao.updateTransactionRent(transactionRentModel, id);
-			if (transactionRent != null) {
-				rm.setMessage("TransactionRent Information saved successfully");
-				rm.setResults(transactionRent);
+			System.out.println("TransactionDieselId=" + id);
+			TransactionDiesel transactionDiesel = transactionDieselDao.updateTransactionDiesel(transactionDieselModel, id);
+			if (transactionDiesel != null) {
+				rm.setMessage("TransactionDiesel Information saved successfully");
+				rm.setResults(transactionDiesel);
 				rm.setStatusCode(1);
 			} else {
 				rm.setMessage("Record not saved");
-				rm.setResults(transactionRent);
+				rm.setResults(transactionDiesel);
 				rm.setStatusCode(0);
 			}
 		} catch (Exception e) {
@@ -80,19 +80,19 @@ public class TransactionDieselController {
 		return new ResponseEntity<>(rm, HttpStatus.OK);
 	}
 
-	@GetMapping("transactionRents/{limit}/{offset}")
-	public ResponseEntity<ResponseMessage<List<TransactionRent>>> getTransactionRents(@PathVariable int limit,@PathVariable int offset) {
-		ResponseMessage<List<TransactionRent>> rm = new ResponseMessage<>();
+	@GetMapping("transactionDiesels/{limit}/{offset}")
+	public ResponseEntity<ResponseMessage<List<TransactionDiesel>>> getTransactionDiesels(@PathVariable int limit,@PathVariable int offset) {
+		ResponseMessage<List<TransactionDiesel>> rm = new ResponseMessage<>();
 
 		try {
-			List<TransactionRent> transactionRents = transactionRentDao.getAllTransactionRents(limit,offset);
-			if (transactionRents != null) {
-				rm.setMessage("TransactionRents are available");
-				rm.setResults(transactionRents);
+			List<TransactionDiesel> transactionDiesels = transactionDieselDao.getAllTransactionDiesels(limit,offset);
+			if (transactionDiesels != null) {
+				rm.setMessage("TransactionDiesels are available");
+				rm.setResults(transactionDiesels);
 				rm.setStatusCode(1);
 			} else {
-				rm.setMessage("TransactionRents are not available.");
-				rm.setResults(transactionRents);
+				rm.setMessage("TransactionDiesels are not available.");
+				rm.setResults(transactionDiesels);
 				rm.setStatusCode(0);
 			}
 		} catch (Exception e) {
@@ -105,19 +105,19 @@ public class TransactionDieselController {
 		return new ResponseEntity<>(rm, HttpStatus.OK);
 	}
 
-	@GetMapping("transactionRents/{id}")
-	public ResponseEntity<ResponseMessage<TransactionRent>> getTransactionRentDetail(@PathVariable Long id) {
-		ResponseMessage<TransactionRent> rm = new ResponseMessage<>();
+	@GetMapping("transactionDiesels/{id}")
+	public ResponseEntity<ResponseMessage<TransactionDiesel>> getTransactionDieselDetail(@PathVariable Long id) {
+		ResponseMessage<TransactionDiesel> rm = new ResponseMessage<>();
 
 		try {
-			TransactionRent transactionRents = transactionRentDao.getTransactionRentDetail(id).get(0);
-			if (transactionRents != null) {
-				rm.setMessage("TransactionRent details are available");
-				rm.setResults(transactionRents);
+			TransactionDiesel transactionDiesels = transactionDieselDao.getTransactionDieselDetail(id).get(0);
+			if (transactionDiesels != null) {
+				rm.setMessage("TransactionDiesel details are available");
+				rm.setResults(transactionDiesels);
 				rm.setStatusCode(1);
 			} else {
-				rm.setMessage("TransactionRent details are not available.");
-				rm.setResults(transactionRents);
+				rm.setMessage("TransactionDiesel details are not available.");
+				rm.setResults(transactionDiesels);
 				rm.setStatusCode(0);
 			}
 		} catch (Exception e) {
@@ -131,19 +131,19 @@ public class TransactionDieselController {
 	}
 
 	@GetMapping("search/{value}")
-	public ResponseEntity<ResponseMessage<List<TransactionRent>>> searchTransactionRentDetail(
+	public ResponseEntity<ResponseMessage<List<TransactionDiesel>>> searchTransactionDieselDetail(
 			@PathVariable String value) {
-		ResponseMessage<List<TransactionRent>> rm = new ResponseMessage<>();
+		ResponseMessage<List<TransactionDiesel>> rm = new ResponseMessage<>();
 
 		try {
-			List<TransactionRent> transactionRents = transactionRentDao.searchTransactionRentInfo(value);
-			if (transactionRents != null) {
-				rm.setMessage("TransactionRent's are available");
-				rm.setResults(transactionRents);
+			List<TransactionDiesel> transactionDiesels = transactionDieselDao.searchTransactionDieselInfo(value);
+			if (transactionDiesels != null) {
+				rm.setMessage("TransactionDiesel's are available");
+				rm.setResults(transactionDiesels);
 				rm.setStatusCode(1);
 			} else {
-				rm.setMessage("TransactionRent's are not available.");
-				rm.setResults(transactionRents);
+				rm.setMessage("TransactionDiesel's are not available.");
+				rm.setResults(transactionDiesels);
 				rm.setStatusCode(0);
 			}
 		} catch (Exception e) {

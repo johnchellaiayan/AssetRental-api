@@ -21,7 +21,7 @@ import com.assetmgmt.entity.model.TransactionDieselModel;
 import com.assetmgmt.repository.TransactionDieselRepository;
 
 @Repository
-public class TransactionDielselDao {
+public class TransactionDieselDao {
 
 	@Autowired
 	private EntityManager em;

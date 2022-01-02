@@ -1,14 +1,12 @@
 package com.assetmgmt.entity.model;
 
-import javax.persistence.Column;
-
 import lombok.Data;
 
 @Data
 public class AssetsModel {
 
 	private String id;
-	private String BuildingName;
+	private String buildingName;
 	private String blockNo;
 	private String floorNo;
 	private String doorNo;

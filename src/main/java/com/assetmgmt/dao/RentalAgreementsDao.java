@@ -19,7 +19,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.assetmgmt.entity.MasterLessor;
 import com.assetmgmt.entity.RentalAgreements;
 import com.assetmgmt.entity.model.RentalAgreementsModel;
 import com.assetmgmt.repository.RentalAgreementsRepository;

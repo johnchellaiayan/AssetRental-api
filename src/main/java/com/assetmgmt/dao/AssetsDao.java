@@ -49,7 +49,7 @@ public class AssetsDao {
 
 	@SuppressWarnings("deprecation")
 	@Transactional
-	public List<MasterAssets> getAllAssetss(int limit, int offset) {
+	public List<MasterAssets> getAllAssets(int limit, int offset) {
 		Session session = em.unwrap(Session.class);
 		CriteriaBuilder builder = session.getCriteriaBuilder();
 		CriteriaQuery<MasterAssets> criteriaQuery = builder.createQuery(MasterAssets.class);
@@ -81,7 +81,7 @@ public class AssetsDao {
 		CriteriaQuery<MasterAssets> crq = crBuilder.createQuery(MasterAssets.class);
 		Root<MasterAssets> root = crq.from(MasterAssets.class);
 		crq.select(root)
-				.where(crBuilder.or(crBuilder.like(root.<String>get("name"), "" + inFindValue + "%"),
+				.where(crBuilder.or(crBuilder.like(root.<String>get("buildingName"), "" + inFindValue + "%"),
 						crBuilder.like(root.get("mobileNo1"), "" + inFindValue + "%"),
 						crBuilder.like(root.<String>get("area"), "" + inFindValue + "%"),
 						crBuilder.like(root.<String>get("mobileNo2"), "" + inFindValue + "%"),

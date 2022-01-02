@@ -33,7 +33,7 @@ public class MasterAssets extends UserDateAudit {
 	private int version;*/
 
 	@Column(length = 30)
-	private String BuildingName;
+	private String buildingName;
 	
 	@Column(length = 30)
 	private String blockNo;

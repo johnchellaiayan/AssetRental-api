@@ -85,7 +85,7 @@ public class AssetsController {
 		ResponseMessage<List<MasterAssets>> rm = new ResponseMessage<>();
 
 		try {
-			List<MasterAssets> assetss = assetsDao.getAllAssetss(limit,offset);
+			List<MasterAssets> assetss = assetsDao.getAllAssets(limit,offset);
 			if (assetss != null) {
 				rm.setMessage("Assetss are available");
 				rm.setResults(assetss);
