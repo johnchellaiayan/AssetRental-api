@@ -1,0 +1,20 @@
+package com.assetmgmt.dto;
+
+import java.math.BigInteger;
+
+import lombok.Data;
+@Data
+public class StatisticsDto {
+	
+	private BigInteger totalCustomers;
+	
+	private BigInteger totalDrivers;
+	
+	private BigInteger totalUsers;
+	
+	private BigInteger totalCurrentBookings;
+	
+	private BigInteger expiredLiscenseDrivers;
+
+
+}
