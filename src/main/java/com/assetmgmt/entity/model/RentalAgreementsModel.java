@@ -2,6 +2,8 @@ package com.assetmgmt.entity.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -9,17 +11,13 @@ import lombok.Data;
 public class RentalAgreementsModel {
 	@ApiModelProperty(hidden = true)
 	private Long id;
-	private String name;
-	private String address;
-	private String area;
-	private String phoneNo1;
-	private String phoneNo2;
-	private String mobileNo1;
-	private String mobileNo2;
-	private String licenseNo;
-	private Date licenseDate;
-	private Date licenseExpiryDate;
-	private String complaints;
-	private String isResigned;
-	private String identifierNo;
+	private String lessorId;
+	private String lesseeId;
+	private String assetDetailsId;
+	private String agreementDate;
+	private String description;
+	private String saccode;
+	private String startRentalPeriod;
+	private String endRentalPeriod;
+	private String rentAmount;
 }

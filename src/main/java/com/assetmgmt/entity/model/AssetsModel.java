@@ -1,19 +1,21 @@
 package com.assetmgmt.entity.model;
 
+import javax.persistence.Column;
+
 import lombok.Data;
 
 @Data
 public class AssetsModel {
 
 	private String id;
-	private String name;
+	private String BuildingName;
+	private String blockNo;
+	private String floorNo;
+	private String doorNo;
 	private String address;
-	private String area;
-	private String phoneNo1;
-	private String phoneNo2;
-	private String mobileNo1;
-	private String mobileNo2;
-	private String panfgName;
-	private String complaints;
-	private String customerRequest;
+	private String city;
+	private String pincode;
+	private String totalsqft;
+	private String status;
+
 }

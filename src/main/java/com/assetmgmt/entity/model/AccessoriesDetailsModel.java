@@ -1,28 +1,18 @@
 package com.assetmgmt.entity.model;
 
+import javax.persistence.Column;
+
 import lombok.Data;
 
 @Data
 public class AccessoriesDetailsModel {
 
 	private Long id;
-	private String bookedby;
-	private String bookingno;
-	private String driverName;
-	private String reportDate;
-	private String customerName;
-	private String pickupArea;
-	private String dropArea;
-	private String custPhone1;
-	private String custPhone2;
-	private String carName;
-	private String fromAddress;
-	private String toAddress;
-	private String remark;
-	private String complaints;	
-	private String smsTo;
-	private String customerRequest;
-	private String bookStatus;
-	private String loggedby;
-	private boolean isDriverAssigningdTimeExceeded;
+	private String productName;
+	private String modelName;
+	private String productSlNo;
+	private String description;
+	private String purchaseDate;
+	private String warrantyYears;
+	private String purchaseAmount;
 }
