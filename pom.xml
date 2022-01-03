@@ -10,7 +10,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com</groupId>
-	<artifactId>AssetRental-ui</artifactId>
+	<artifactId>AssetRental-api</artifactId>
 	<version>0.0.1</version>
 	<name>ar</name>
 	<description>Asset project for Spring Boot</description>

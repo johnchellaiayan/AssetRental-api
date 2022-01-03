@@ -26,8 +26,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfig {
 
 	private ApiInfo apiInfo() {
-		return new ApiInfo("Ovitag Api List", "Your REST API for web app", "1.0", "Terms of service",
-				new Contact("Pradeep", "http://techie-mixture.blogspot.com/", ""), "", "");
+		return new ApiInfo("Asset management Api List", "Your REST API for web app", "1.0", "Terms of service",
+				new Contact("John", "http://test.blogspot.com/", ""), "", "");
 		
 	}
 
@@ -42,7 +42,7 @@ public class SwaggerConfig {
 
 	private ApiInfo metadata() {
 		return new ApiInfoBuilder()//
-				.title("Covid 19 api list documentation - 06-08-2020 - 07:30 AM")//
+				.title("api list documentation - 06-08-2020 - 07:30 AM")//
 				.description("Api Documentation")//
 				.version("1.0.0")//
 				.license("MIT License").licenseUrl("http://opensource.org/licenses/MIT")//
