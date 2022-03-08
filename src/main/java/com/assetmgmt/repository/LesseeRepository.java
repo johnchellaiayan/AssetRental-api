@@ -9,5 +9,5 @@ import com.assetmgmt.entity.MasterLessee;
 
 @Repository
 @Transactional
-public interface LesseeRepository extends JpaRepository<MasterLessee, String> {
+public interface LesseeRepository extends JpaRepository<MasterLessee, Long> {
 }

@@ -9,5 +9,5 @@ import com.assetmgmt.entity.MasterLessor;
 
 @Repository
 @Transactional
-public interface LessorRepository extends JpaRepository<MasterLessor, String> {
+public interface LessorRepository extends JpaRepository<MasterLessor, Long> {
 }

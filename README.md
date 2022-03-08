@@ -1,6 +1,7 @@
 # AssetRentalMgmt-api
  AssetManagement
 
+## use JAVA 1.8
 ### Database creation
 create database assetmgmt;
 

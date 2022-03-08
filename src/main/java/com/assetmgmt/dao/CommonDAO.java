@@ -1,12 +1,16 @@
 package com.assetmgmt.dao;
 
 import java.time.Duration;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
+import com.assetmgmt.dto.ReportDieselDto;
+import com.assetmgmt.entity.MasterLessee;
+import com.assetmgmt.entity.MasterLessor;
+import com.assetmgmt.entity.model.ReportModel;
+import com.assetmgmt.repository.*;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.transform.Transformers;
@@ -17,12 +21,23 @@ import com.assetmgmt.dto.MessageDto;
 import com.assetmgmt.dto.StatisticsDto;
 import com.assetmgmt.entity.model.MessageModel;
 
-@SuppressWarnings("deprecation")
 @Repository
 public class CommonDAO {
 
 	@Autowired
 	EntityManager entityManager;
+
+	@Autowired
+	private ReportRepository reportRepository;
+
+	@Autowired
+	private LesseeRepository lesseeRepositoryy;
+
+	@Autowired
+	private LessorRepository lessorRepository;
+
+	@Autowired
+	private BankDetailsRepository bankDetailsRepository;
 
 	@SuppressWarnings({ "rawtypes","unchecked" })
 	@Transactional
@@ -52,4 +67,32 @@ public class CommonDAO {
 		return mtdo;
 	}
 
+	@Transactional
+	public Map<String, Object> getReportDetails(ReportModel reportModel) {
+		Session sess = entityManager.unwrap(Session.class);
+
+		Optional<MasterLessor> masterLessor =  lessorRepository.findById(1L);
+
+		Optional<MasterLessee> masterLessee = lesseeRepositoryy.findById(1L);
+
+		//Optional<BankDetails> bankDetails = bankDetailsRepository.findById(masterLessor.get().getBankDetails().getId());
+
+		List<ReportDieselDto> reportDtos = reportRepository.findAllRentalAgreementsquery(
+				reportModel.getLessorid(),reportModel.getLesseeid(), reportModel.getStartdate(), reportModel.getEnddate());
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("lessorDetail", masterLessor);
+		map.put("lesseeDetail" , masterLessee);
+		map.put("billDetail"  , reportDtos);
+
+		//List<ReportDto> dto = (List<ReportDto>) q.list();
+		return map;
+	}
+
 }
+
+
+//    //simpleExample
+//    Query query = em.createNativeQuery(
+//"SELECT u.name,s.something FROM user u,  someTable s WHERE s.user_id = u.id",
+//NameSomething.class);
+//    List list = (List<NameSomething.class>) query.getResultList();

@@ -15,14 +15,13 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 @SpringBootApplication
 @EntityScan(basePackageClasses = { AssetManagementApp.class, Jsr310JpaConverters.class })
 @Configuration
-@EnableCaching
 public class AssetManagementApp extends SpringBootServletInitializer {
 	
 	  public static void main(String[] args) {
 	  SpringApplication.run(AssetManagementApp.class, args); }
 	 
 	
-	@Override
+	/*@Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(AssetManagementApp.class);
     }
@@ -30,5 +29,5 @@ public class AssetManagementApp extends SpringBootServletInitializer {
 	@PostConstruct
 	void init() {
 		//TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-	}
+	}*/
 }

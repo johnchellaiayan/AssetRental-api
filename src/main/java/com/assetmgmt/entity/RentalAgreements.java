@@ -2,12 +2,7 @@ package com.assetmgmt.entity;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Version;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.assetmgmt.entity.audit.UserDateAudit;
@@ -19,17 +14,13 @@ import lombok.Data;
 public class RentalAgreements extends UserDateAudit {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long agreementId; 
+	private Long agreementId;
 
-	/*
-	 * @JsonIgnore
-	 * 
-	 * @Version private int version;
-	 */
-	
-	@Column(length = 30)
-	private String lessorId;
-	
+	@JsonIgnore
+	@JoinColumn(name = "lessor_id", referencedColumnName = "id")
+	@ManyToOne(fetch = FetchType.LAZY)
+	private MasterLessor lessor;
+
 	@Column(length = 30)
 	private String lesseeId;
 	
