@@ -1,7 +1,6 @@
 package com.assetmgmt.repository;
 
 import com.assetmgmt.dto.ReportDieselDto;
-import com.assetmgmt.entity.MasterLessor;
 import com.assetmgmt.entity.RentalAgreements;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -9,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @Transactional
@@ -29,8 +27,8 @@ public interface ReportRepository extends CrudRepository<RentalAgreements, Long>
 			+ "right join transaction_diesel td on ra.agreement_id =td.agreement_id "
 			+ "WHERE  ra.lessee_id = ?1 and  ra.lessor_id = ?2 and td.start_date >= ?3 and td.end_date <= ?4",
 			nativeQuery = true) // and r.startRentalPeriod >= ?3 and r.endRentalPeriod <= ?4")
-	List<ReportDieselDto> findAllRentalAgreementsquery(String lesseeId, String lessorId,
-													   String startRentalPeriod, String endRentalPeriod);
+	List<ReportDieselDto> findDieselTransReport(String lesseeId, String lessorId,
+												String startRentalPeriod, String endRentalPeriod);
 
 	/*@Query("select new com.assetmgmt.dto.ReportDto(res.id,res.code,res.name,res.page," +
 			"res.icon,res.link,res.url,res.checkUrl,res.sequence," +

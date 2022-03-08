@@ -6,7 +6,6 @@ import java.util.*;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
-import com.assetmgmt.dto.ReportDieselDto;
 import com.assetmgmt.entity.MasterLessee;
 import com.assetmgmt.entity.MasterLessor;
 import com.assetmgmt.entity.model.ReportModel;
@@ -77,8 +76,13 @@ public class CommonDAO {
 
 		//Optional<BankDetails> bankDetails = bankDetailsRepository.findById(masterLessor.get().getBankDetails().getId());
 
-		List<ReportDieselDto> reportDtos = reportRepository.findAllRentalAgreementsquery(
-				reportModel.getLessorid(),reportModel.getLesseeid(), reportModel.getStartdate(), reportModel.getEnddate());
+		List reportDtos = new ArrayList();
+		if(reportModel.getReporttype().equalsIgnoreCase("diesel")) {
+			reportDtos = reportRepository.findDieselTransReport(
+					reportModel.getLessorid(), reportModel.getLesseeid(), reportModel.getStartdate(), reportModel.getEnddate());
+		}else{
+
+		}
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("lessorDetail", masterLessor);
 		map.put("lesseeDetail" , masterLessee);
