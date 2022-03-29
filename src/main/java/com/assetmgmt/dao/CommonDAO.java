@@ -23,74 +23,86 @@ import com.assetmgmt.entity.model.MessageModel;
 @Repository
 public class CommonDAO {
 
-	@Autowired
-	EntityManager entityManager;
+    @Autowired
+    EntityManager entityManager;
 
-	@Autowired
-	private ReportRepository reportRepository;
+    @Autowired
+    private ReportRepository reportRepository;
 
-	@Autowired
-	private LesseeRepository lesseeRepositoryy;
+    @Autowired
+    private LesseeRepository lesseeRepositoryy;
 
-	@Autowired
-	private LessorRepository lessorRepository;
+    @Autowired
+    private LessorRepository lessorRepository;
 
-	@Autowired
-	private BankDetailsRepository bankDetailsRepository;
+    @Autowired
+    private BankDetailsRepository bankDetailsRepository;
 
-	@SuppressWarnings({ "rawtypes","unchecked" })
-	@Transactional
-	public StatisticsDto getStatistics() {
-		Session sess = entityManager.unwrap(Session.class);
-		Date currentDate = new Date();
-		Date thirtyDaysFromCurrentDate = new Date(currentDate.getTime() + Duration.ofDays(30).toMillis());
-		String sql = "SELECT"
-				+ "  (SELECT COUNT(*) FROM driver ) AS totalDrivers,"
-				+ "  (SELECT COUNT(*) FROM customer) AS totalCustomers,"
-				+ "  (SELECT COUNT(*) FROM booking) AS totalCurrentBookings,"
-				+ "  (SELECT COUNT(*) FROM user) AS totalUsers,"
-				+ "  (SELECT COUNT(*) FROM driver where license_expiry_date<=:reqDate OR license_expiry_date<=CURDATE() ) AS expiredLiscenseDrivers";
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    @Transactional
+    public StatisticsDto getStatistics() {
+        Session sess = entityManager.unwrap(Session.class);
+        Date currentDate = new Date();
+        Date thirtyDaysFromCurrentDate = new Date(currentDate.getTime() + Duration.ofDays(30).toMillis());
+        String sql = "SELECT"
+                + "  (SELECT COUNT(*) FROM driver ) AS totalDrivers,"
+                + "  (SELECT COUNT(*) FROM customer) AS totalCustomers,"
+                + "  (SELECT COUNT(*) FROM booking) AS totalCurrentBookings,"
+                + "  (SELECT COUNT(*) FROM user) AS totalUsers,"
+                + "  (SELECT COUNT(*) FROM driver where license_expiry_date<=:reqDate OR license_expiry_date<=CURDATE() ) AS expiredLiscenseDrivers";
 
 
-		Query q = sess.createSQLQuery(sql).setResultTransformer(Transformers.aliasToBean(StatisticsDto.class));
-		q.setParameter("reqDate", thirtyDaysFromCurrentDate);
-		List<StatisticsDto> dto = (List<StatisticsDto>) q.list();
-		return dto.get(0);
-	}
-	
-	@Transactional
-	public MessageDto sedMessageTo(MessageModel messageModel) {
-		MessageDto mtdo = new MessageDto(); 
-		mtdo.setCustPhone(messageModel.getCustphone());
-		mtdo.setSmsto(messageModel.getSmsto());
-		return mtdo;
-	}
+        Query q = sess.createSQLQuery(sql).setResultTransformer(Transformers.aliasToBean(StatisticsDto.class));
+        q.setParameter("reqDate", thirtyDaysFromCurrentDate);
+        List<StatisticsDto> dto = (List<StatisticsDto>) q.list();
+        return dto.get(0);
+    }
 
-	@Transactional
-	public Map<String, Object> getReportDetails(ReportModel reportModel) {
-		Session sess = entityManager.unwrap(Session.class);
+    @Transactional
+    public MessageDto sedMessageTo(MessageModel messageModel) {
+        MessageDto mtdo = new MessageDto();
+        mtdo.setCustPhone(messageModel.getCustphone());
+        mtdo.setSmsto(messageModel.getSmsto());
+        return mtdo;
+    }
 
-		Optional<MasterLessor> masterLessor =  lessorRepository.findById(1L);
+    @Transactional
+    public Map<String, Object> getReportDetails(ReportModel reportModel) {
+        Session sess = entityManager.unwrap(Session.class);
 
-		Optional<MasterLessee> masterLessee = lesseeRepositoryy.findById(1L);
+        Optional<MasterLessor> masterLessor = lessorRepository.findById(1L);
 
-		//Optional<BankDetails> bankDetails = bankDetailsRepository.findById(masterLessor.get().getBankDetails().getId());
+        Optional<MasterLessee> masterLessee = lesseeRepositoryy.findById(1L);
+        List reportDtos = new ArrayList();
 
-		List reportDtos = new ArrayList();
-		if(reportModel.getReporttype().equalsIgnoreCase("diesel")) {
-			reportDtos = reportRepository.findDieselTransReport(
-					reportModel.getLessorid(), reportModel.getLesseeid(), reportModel.getStartdate(), reportModel.getEnddate());
-		}else{
+        switch (reportModel.getReporttype()) {
+            case "diesel":
+                reportDtos = reportRepository.findDieselTransReport(
+                        reportModel.getLessorid(), reportModel.getLesseeid(), reportModel.getStartdate(), reportModel.getEnddate());
+                break;
+            case "genset":
+                reportDtos = reportRepository.findGensetTransReport(
+                        reportModel.getLessorid(), reportModel.getLesseeid(), reportModel.getStartdate(), reportModel.getEnddate());
+                break;
 
-		}
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("lessorDetail", masterLessor);
-		map.put("lesseeDetail" , masterLessee);
-		map.put("billDetail"  , reportDtos);
+            case "acamc":
+                reportDtos = reportRepository.findAcamcTransReport(
+                        reportModel.getLessorid(), reportModel.getLesseeid(), reportModel.getStartdate(), reportModel.getEnddate());
+                break;
 
-		//List<ReportDto> dto = (List<ReportDto>) q.list();
-		return map;
-	}
+            case "rental":
+                reportDtos = reportRepository.findRentalAgreementReport(
+                        reportModel.getLessorid(), reportModel.getLesseeid(), reportModel.getStartdate(), reportModel.getEnddate());
+
+                break;
+        }
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("lessorDetail", masterLessor);
+        map.put("lesseeDetail", masterLessee);
+        map.put("billDetail", reportDtos);
+        return map;
+    }
 
 }
 
@@ -100,3 +112,4 @@ public class CommonDAO {
 //"SELECT u.name,s.something FROM user u,  someTable s WHERE s.user_id = u.id",
 //NameSomething.class);
 //    List list = (List<NameSomething.class>) query.getResultList();
+//Optional<BankDetails> bankDetails = bankDetailsRepository.findById(masterLessor.get().getBankDetails().getId());
