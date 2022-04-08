@@ -28,6 +28,12 @@ public class AccessoriesAmc extends UserDateAudit {
 	 */
 
 	@Column(length = 30)
+	private String lessorId;
+
+	@Column(length = 30)
+	private String lesseeId;
+
+	@Column(length = 30)
 	private String agreementId;
 	
 	@Column(length = 30)

@@ -8,6 +8,8 @@ import lombok.Data;
 public class AccessoriesAmcModel {
 
 	private String id;
+	private String lessorId;
+	private String lesseeId;
 	private String agreementId;
 	private String productId;
 	private String modelName;

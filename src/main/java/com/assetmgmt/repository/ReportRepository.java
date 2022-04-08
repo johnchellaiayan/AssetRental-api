@@ -64,4 +64,19 @@ public interface ReportRepository extends CrudRepository<RentalAgreements, Long>
 	List<ReportRentalDto> findRentalAgreementReport(String lesseeId, String lessorId,
 													String startRentalPeriod, String endRentalPeriod);
 
+	@Query(value = "select  td.id as rentalId, td.balance_amount as balanceAmount, "
+			+ "td.start_date as startDate, td.end_date as endDate, td.rent_amount as rentAmount, "
+			+ "td.description  from rental_agreements ra "
+			+ "left join master_lessor ml on ra.lessor_id =ml.id "
+			+ "right join transaction_rent td on ra.agreement_id =td.agreement_id "
+			+ "WHERE  ra.lessee_id = ?1 and  ra.lessor_id = ?2 and td.start_date >= ?3 and td.end_date <= ?4",
+			nativeQuery = true)
+	List<ReportRentalDto> findOutstandingRentalReport(String lesseeId, String lessorId,
+													String startRentalPeriod, String endRentalPeriod);
+
+	@Query(value = "select  ra.agreement_id as agreementId,"
+			+ "ra.description  from rental_agreements ra "
+			+ "WHERE  ra.lessee_id = ?1 and  ra.lessor_id = ?2 ",
+			nativeQuery = true)
+	List<ReportRentalDto> getRRentalAgreement(String lesseeId, String lessorId);
 }

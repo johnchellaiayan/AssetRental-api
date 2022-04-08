@@ -6,6 +6,7 @@ import java.util.*;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
+import com.assetmgmt.dto.ReportAcamcDto;
 import com.assetmgmt.entity.MasterLessee;
 import com.assetmgmt.entity.MasterLessor;
 import com.assetmgmt.entity.model.ReportModel;
@@ -113,9 +114,33 @@ public class CommonDAO {
         map.put("lessorDetail", masterLessor);
         map.put("lesseeDetail", masterLessee);
         map.put(transDetailsStr, reportDtos);
+        if (reportModel.getReporttype().equalsIgnoreCase("acamc")){
+            Map acTotalAmount = findAcTotalAmount(reportDtos);
+            map.put("totalamount", acTotalAmount);
+        }
         return map;
     }
 
+    Map<String, Float> findAcTotalAmount(List<ReportAcamcDto> reportDtos){
+        Map<String, Float>  rettotal = new HashMap<String, Float>();
+        Float totalBaseamount = new Float("0.0");
+        Float totalCgstamount =  new Float("0.0");
+        Float totalsgstamount =  new Float("0.0");
+        Float totalamount =  new Float("0.0");
+        for(ReportAcamcDto acamt: reportDtos) {
+            totalBaseamount +=  Float.parseFloat(acamt.getBaseAmount());
+            totalCgstamount +=  Float.parseFloat(acamt.getBaseAmount()) *  (Float.parseFloat(acamt.getCgst())/100);
+            totalsgstamount +=  Float.parseFloat(acamt.getBaseAmount()) *  (Float.parseFloat(acamt.getSgst())/100);
+            totalamount += totalBaseamount + totalCgstamount + totalsgstamount;
+        }
+        rettotal.put("basicPrice", totalBaseamount);
+        rettotal.put("CGST", totalCgstamount);
+        rettotal.put("SGST", totalsgstamount);
+        rettotal.put("totalAmcCost", totalamount);
+
+        return  rettotal;
+
+    }
 }
 
 
