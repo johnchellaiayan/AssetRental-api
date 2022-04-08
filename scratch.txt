@@ -1,0 +1,7 @@
+mysql> insert into accessories (description, product_name,status)values('Air condition', 'AC','Good');
+
+
+mysql> insert into accessories (description, product_name,status)values('Genset Main', 'GENSET','Good');
+
+
+mysql> insert into accessories (description, product_name,status)values('LIFT', 'LIFT','Good');

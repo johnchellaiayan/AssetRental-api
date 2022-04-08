@@ -40,7 +40,7 @@ public interface ReportRepository extends CrudRepository<RentalAgreements, Long>
 			+ "right join transaction_accessories td on ra.agreement_id =td.agreement_id "
 			+ "WHERE  ra.lessee_id = ?1 and  ra.lessor_id = ?2 and td.start_date >= ?3 and td.end_date <= ?4",
 			nativeQuery = true) // and r.startRentalPeriod >= ?3 and r.endRentalPeriod <= ?4")
-	List<ReportDieselDto> findGensetTransReport(String lesseeId, String lessorId,
+	List<ReportDieselDto> findTransAccessoriesReport(String lesseeId, String lessorId,
 												String startRentalPeriod, String endRentalPeriod);
 
 	@Query(value = "select  td.amc_id as amcId, td.base_amount as baseAmount, td.cgst, td.sgst, "
@@ -48,10 +48,11 @@ public interface ReportRepository extends CrudRepository<RentalAgreements, Long>
 			+  "td.description, td.total_amount as totalAmount  from rental_agreements ra "
 			+ "left join master_lessor ml on ra.lessor_id =ml.id "
 			+ "right join accessories_amc td on ra.agreement_id =td.agreement_id "
-			+ "WHERE  ra.lessee_id = ?1 and  ra.lessor_id = ?2 and td.start_date >= ?3 and td.end_date <= ?4",
+			+ "WHERE  ra.lessee_id = ?1 and  ra.lessor_id = ?2 and td.start_date >= ?3 and " +
+			"td.end_date <= ?4 and td.product_id = ?5",
 			nativeQuery = true) // and r.startRentalPeriod >= ?3 and r.endRentalPeriod <= ?4")
-	List<ReportAcamcDto> findAcamcTransReport(String lesseeId, String lessorId,
-											  String startRentalPeriod, String endRentalPeriod);
+	List<ReportAcamcDto> findAmcTransReport(String lesseeId, String lessorId,
+											  String startRentalPeriod, String endRentalPeriod, String productid);
 
 	@Query(value = "select  td.id as rentalId, td.balance_amount as balanceAmount, "
 			+ "td.start_date as startDate, td.end_date as endDate, td.rent_amount as rentAmount, "

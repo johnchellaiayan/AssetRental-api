@@ -74,33 +74,45 @@ public class CommonDAO {
 
         Optional<MasterLessee> masterLessee = lesseeRepositoryy.findById(1L);
         List reportDtos = new ArrayList();
+        String transDetailsStr = "billDetail";
 
         switch (reportModel.getReporttype()) {
             case "diesel":
                 reportDtos = reportRepository.findDieselTransReport(
                         reportModel.getLessorid(), reportModel.getLesseeid(), reportModel.getStartdate(), reportModel.getEnddate());
                 break;
-            case "genset":
-                reportDtos = reportRepository.findGensetTransReport(
-                        reportModel.getLessorid(), reportModel.getLesseeid(), reportModel.getStartdate(), reportModel.getEnddate());
+            case "acamc":
+                reportDtos = reportRepository.findAmcTransReport(
+                        reportModel.getLessorid(), reportModel.getLesseeid(), reportModel.getStartdate(), reportModel.getEnddate(), "1");
+                transDetailsStr = "amcdetails";
                 break;
 
-            case "acamc":
-                reportDtos = reportRepository.findAcamcTransReport(
-                        reportModel.getLessorid(), reportModel.getLesseeid(), reportModel.getStartdate(), reportModel.getEnddate());
+            case "genset":
+                reportDtos = reportRepository.findAmcTransReport(
+                        reportModel.getLessorid(), reportModel.getLesseeid(), reportModel.getStartdate(), reportModel.getEnddate(), "2");
+                transDetailsStr = "amcdetails";
+                break;
+
+            case "liftamc":
+                reportDtos = reportRepository.findAmcTransReport(
+                        reportModel.getLessorid(), reportModel.getLesseeid(), reportModel.getStartdate(), reportModel.getEnddate(), "3");
+                transDetailsStr = "amcdetails";
                 break;
 
             case "rental":
                 reportDtos = reportRepository.findRentalAgreementReport(
                         reportModel.getLessorid(), reportModel.getLesseeid(), reportModel.getStartdate(), reportModel.getEnddate());
-
+                transDetailsStr = "rentdetails";
                 break;
+            default:
+                 masterLessor = Optional.ofNullable(null);
+                 masterLessee = Optional.ofNullable(null);
         }
 
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("lessorDetail", masterLessor);
         map.put("lesseeDetail", masterLessee);
-        map.put("billDetail", reportDtos);
+        map.put(transDetailsStr, reportDtos);
         return map;
     }
 
